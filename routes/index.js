@@ -163,40 +163,6 @@ exports.new_photo = function(req, res){
 
 };
 
-exports.edit = function(req,res) {
-    
-    console.log(req.param('photo_id'));
-
-    Blog.findById(req.param('photo_id'), function(err, blogpost){
-
-      if (err) {
-        
-        res.send("Uhoh something went wrong");
-        console.log(err);
-
-      } else if (blogpost.user != req.user.id){
-
-        res.send('You do not own this blog post.');
-      
-      } else {
-        
-        console.log(blogpost);
-        
-        var template_data = {
-          title : 'Edit Blog Post',
-          blogpost : blogpost,
-          currentUser : req.user
-        };
-
-        res.render('blog_form.html', template_data);
-      } 
-
-
-
-    });
-
-};
-
 var cleanFileName = function(filename) {
     
     // cleans and generates new filename for example userID=abc123 and filename="My Pet Dog.jpg"

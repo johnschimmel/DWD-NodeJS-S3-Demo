@@ -34,8 +34,6 @@ app.configure(function(){
 
 });
 
-
-
 // public routes
 var routes = require('./routes/index.js');
 app.get('/', routes.index);
