@@ -1,0 +1,17 @@
+{
+  "name": "dwd-nodejs-s3-demo",
+  "version": "0.0.1",
+  
+  "dependencies": {
+    "express": "3.0.0rc5",
+    "hogan-express" : "0.3.3",
+    "mongoose" : "3.5.4",
+    "moment" : "1.7.2",
+    "aws-sdk" : "v0.9.8-pre.9"
+  },
+
+  "engines" : {
+    "node" : "0.8.x",
+    "npm" : "1.1.x"
+  }
+}
