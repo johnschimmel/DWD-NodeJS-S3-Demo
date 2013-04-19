@@ -7,9 +7,6 @@ var express = require('express')
   , http = require('http')
   , path = require('path')
   , mongoose = require('mongoose')
-  , mongoStore = require('connect-mongodb')
-  , passport = require('passport')
-  , LocalStrategy = require('passport-local').Strategy;
   
 var app = express();
 
@@ -42,7 +39,10 @@ app.configure(function(){
 // public routes
 var routes = require('./routes/index.js');
 app.get('/', routes.index);
-app.post('/newimage', routes.newimage);
+app.post('/newphoto', routes.new_photo);
+
+app.get('/photo/delete/:photo_id', routes.delete_photo);
+app.get('/photo/:photo_id', routes.display_photo);
 
 
 // Turn the server on!

@@ -14,14 +14,96 @@ var s3 = new AWS.S3();
 // main page
 exports.index =  function(req,res){
 
-  templateData = {
-    'title' : 'Image Upload to S3 Demo'
-  };
-  res.render("index.html", templateData);
+  // query for all images
+  var photoQuery = Photo.find({});
+  photoQuery.sort('-created');
+  photoQuery.exec(function(err, photos){
+    if (err) {
+      console.error("uhoh something went wrong");
+      console.error(err);
+      res.send("error on querying images");
+
+    } else {
+
+      console.log(photos);
+      templateData = {
+        title : 'Image Upload to S3 Demo',
+        photos : photos
+      };
+
+      res.render("index.html", templateData);
+
+    }
+  })
+
+  
   
 };
 
-exports.newimage = function(req, res){
+exports.display_photo = function(req, res){ 
+
+  photo_id = req.params.photo_id;
+
+  Photo.findById(photo_id, function(err, photo) {
+
+    if (err) {
+      console.error(err);
+      res.send("Unable to find photo");
+    } else {
+
+      templateData = {
+        photo : photo
+      }
+
+      // display photo
+      res.render('photo_detail.html', templateData);
+    }
+  });
+
+};
+
+exports.delete_photo = function(req, res) {
+
+  // get the photo
+  // delete from S3
+  // delete from Mongo
+  var photo_id = req.params.photo_id;
+
+  Photo.findById(photo_id, function(err, photo){
+
+    if (err) {
+      console.error(err);
+      res.send("unable to find the photo");
+    } else {
+
+      // delete from S3
+      s3.client.deleteObject({Bucket: 'dwd_uploads', Key: photo.image}, function(err, data) {
+        console.log(err, data)
+
+        // delete from MongoDB
+        photo.remove(function(err){
+          if (err) {
+            console.error("error when trying to remove photo document from mongo")
+            console.error(err);
+
+            res.send("Unable to remove photo document from Mongo");
+          }
+
+          // else redirect to main page
+
+          res.redirect('/')
+
+        })
+      });
+
+
+    }
+
+  })
+
+};
+
+exports.new_photo = function(req, res){
 
   // Get File upload information  
   var filename = req.files.image.filename; // actual filename of file
@@ -44,7 +126,14 @@ exports.newimage = function(req, res){
   // 3a) We first need to open and read the image upload into a buffer
   fs.readFile(path, function(err, file_buffer){
 
+    // pick the Amazon S3 Bucket
     var s3bucket = new AWS.S3({params: {Bucket: 'dwd_uploads'}});
+    
+    // Set the bucket object properties
+    // Key == filename
+    // Body == contents of file
+    // ACL == Should it be public? Private?
+    // ContentType == MimeType of file ie. image/jpeg.
     var params = {
       Key: cleanedFileName,
       Body: file_buffer,
@@ -52,6 +141,7 @@ exports.newimage = function(req, res){
       ContentType: mimeType
     };
     
+    // Put the Object in the Bucket
     s3bucket.putObject(params, function(err, data) {
       if (err) {
         console.log(err)
@@ -60,12 +150,12 @@ exports.newimage = function(req, res){
         console.log("Successfully uploaded data to s3 bucket");
 
         // add image to blog post
-        photoPost.images.push(cleanedFileName);
+        photoPost.image = cleanedFileName;
       }
 
       photoPost.save();
 
-      res.redirect('/edit/'+photoPost.id);
+      res.redirect('/');
 
     });
 

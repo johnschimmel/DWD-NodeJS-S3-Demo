@@ -37,22 +37,11 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </a>
-                    <a class="brand" href="/">DWD NodeJS Passport Demo</a>
+                    <a class="brand" href="/">DWD NodeJS S3 Demo</a>
                     <div class="nav-collapse collapse">
                         <ul class="nav">
                             <li class="active"><a href="/">Home</a></li>
-                            {{#currentUser}}
-                            <li>
-                                <a href="/user/{{currentUser.username}}">{{currentUser.username}}
-                                </a>
-                            </li>
-                            <li><a href="/write">Write Post</a></li>
-                            <li><a href='/logout'>Logout</a></li>
-                            {{/currentUser}}
-                            {{^currentUser}}
-                            <li><a href='/login'>Login</a></li>
-                            <li><a href='/register'>Register</a></li>
-                            {{/currentUser}}
+                            
                         </ul>
                     </div><!--/.nav-collapse -->
                 </div>
@@ -65,7 +54,7 @@
 
             <hr>
             
-            <a href="https://github.com/johnschimmel/DWD-NodeJS-Passport-Demo">View on Github</a>
+            <a href="https://github.com/johnschimmel/DWD-NodeJS-S3-Demo">View on Github</a>
         </div> <!-- /container -->
 
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
@@ -75,11 +64,6 @@
 
         <script src="/js/main.js"></script>
 
-        <script>
-            var _gaq=[['_setAccount','UA-29253415-1'],['_trackPageview']];
-            (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-            g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
-            s.parentNode.insertBefore(g,s)}(document,'script'));
-        </script>
+
     </body>
 </html>

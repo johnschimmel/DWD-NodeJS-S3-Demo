@@ -4,12 +4,19 @@
     <div class="span9">
 
 
+    	{{#photos}}
+    	
+    	<a href="/photo/{{_id}}">
+    		<img src="https://s3.amazonaws.com/dwd_uploads/{{image}}" width="300" class="dwdphoto img-polaroid" data-toggle="popover" data-placement="bottom" data-content="{{caption}}" title="{{title}}">
+    	</a>
+	
+    	{{/photos}}
 
     </div>
 
     <div class="span3">
     	<h3>Upload a new photo</h3>
-		<form method="POST" action="/newimage" enctype="multipart/form-data">
+		<form method="POST" action="/newphoto" enctype="multipart/form-data">
 			<div class="field required">
 				<label for="id_title">Title</label>
 				<input type="text" required name="title" id="id_title" >
@@ -33,3 +40,4 @@
 
     
 </div>
+

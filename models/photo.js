@@ -5,8 +5,8 @@ var photoSchema = new Schema({
     title     : String,
     urltitle  : String,
     caption      : String,
-    image : String
-    created : { type: Date, default: Date.now },
+    image : String,
+    created : { type: Date, default: Date.now }
 });
 
 // export Page model

@@ -1,0 +1,26 @@
+<div class="row">
+
+    <div class="span2"></div>
+
+    <div class="span10">
+        <article>
+            <header>
+                <h1>{{photo.title}}</h1>
+            
+            </header>
+
+            <p>{{photo.caption}}</p>
+
+            <p>
+                <img src="https://s3.amazonaws.com/dwd_uploads/{{photo.image}}">
+            </p>
+
+            <p>
+                <a href="/photo/delete/{{photo._id}}" class="deleteBtn btn btn-danger">Delete Photo</a>
+            </p>
+        </article>
+        
+    </div>
+
+    
+</div>
